@@ -16,6 +16,7 @@ Built with Electron, React, and Claude AI.
 - **Conversational Chat** — Ask Antonina to check your schedule, draft emails, book meetings, or manage tasks
 - **Smart Autonomy** — 3-tier risk classification (low/medium/high) with configurable autonomy modes (conservative/balanced/executive) that control which actions auto-execute vs. require approval
 - **Goal Management** — Persistent goals that Antonina monitors proactively (inbox control, meeting prep, task review) with periodic checking and automated agent sessions when goals need attention
+- **Meeting Notes** — Reads Granola's local AI-generated meeting summaries (action items, decisions, key points) and displays the last week's meetings in a dedicated view — zero additional API cost
 - **Learning System** — Tracks approval patterns, edit frequency, and decision timing; injects learned preferences into future agent sessions
 - **Planning & Reflection** — Agent plans actions before executing and reflects after sessions, storing insights for future context
 - **Agent Memory** — Persistent memory system for contact notes, thread context, preferences, reflections, and pending items
@@ -31,7 +32,8 @@ Built with Electron, React, and Claude AI.
 | AI | Claude API (Sonnet 4.5 for agent/chat, Haiku 4.5 for triage/reflection) |
 | Email/Calendar | Microsoft Graph API (OAuth2 PKCE flow) |
 | Tasks | Things 3 via AppleScript |
-| External Tools | Model Context Protocol (MCP) servers for Outlook calendar, Things 3 writes, Calendly |
+| Meeting Notes | Granola local cache (AI-generated summaries) |
+| External Tools | Model Context Protocol (MCP) servers for Outlook calendar, Things 3 writes, Calendly, Granola |
 | Packaging | electron-builder -> macOS .app / DMG |
 
 ## Autonomy System
@@ -85,7 +87,7 @@ These patterns are injected into the agent's context so it learns your preferenc
 
 ```
 Renderer Process (React 19 + Tailwind v4 + shadcn/ui)
-  Views: Briefing, Emails, Schedule, Tasks, Activity, History, Settings
+  Views: Briefing, Emails, Schedule, Tasks, Meetings, Activity, History, Settings
                      |
                      | IPC Bridge (30+ handlers)
                      |
@@ -100,10 +102,12 @@ Main Process (Electron + Node)
   |    |- Planning + post-session reflection
   |    |- Memory system (journals, reflections, pending items)
   |- SQLite DB (WAL mode)
+  |- Granola Cache Reader (meeting notes + AI summaries)
   |- MCP Client
        |- outlook-mcp-server
        |- things3-mcp-server
        |- calendly-mcp-server
+       |- granola-mcp-server
 ```
 
 **Key design decisions:**
@@ -127,6 +131,7 @@ src/
 │   │   ├── briefing.ts            # Daily briefing generation
 │   │   ├── settings.ts            # App configuration + autonomy mode
 │   │   ├── goals.ts               # Goal management CRUD
+│   │   ├── meetings.ts            # Granola meeting notes
 │   │   └── health.ts              # System health checks
 │   └── services/
 │       ├── agent/                  # AI agent system
@@ -155,6 +160,8 @@ src/
 │       │   ├── goals.ts            # Goals CRUD + seed defaults
 │       │   ├── briefings.ts        # Stored briefings
 │       │   └── costs.ts            # API cost tracking
+│       ├── granola/                # Granola meeting note integration
+│       │   └── parser.ts           # Cache reader + meeting parser
 │       ├── applescript/            # macOS automation
 │       │   ├── things.ts           # Read tasks from Things 3
 │       │   └── things-write.ts     # Create/update/delete tasks
@@ -172,6 +179,7 @@ src/
 │       │   │   ├── emails/         # Email list, detail, draft panel
 │       │   │   ├── schedule/       # Calendar + embedded chat
 │       │   │   ├── tasks/          # Things 3 task cards
+│       │   │   ├── meetings/       # Granola meeting notes + AI summaries
 │       │   │   ├── activity/       # Approval queue + auto-executed actions
 │       │   │   ├── history/        # Agent session logs
 │       │   │   └── settings/       # Configuration, autonomy mode, goals
@@ -191,6 +199,7 @@ src/
 - **Node.js** 20+ (22 recommended)
 - **macOS** (required for Things 3 AppleScript integration)
 - **Things 3** installed (for task management)
+- **Granola** (optional, for meeting notes — Business plan required for MCP)
 - **Microsoft 365 account** (for email and calendar)
 - **Anthropic API key** (for Claude AI)
 
@@ -298,6 +307,27 @@ The default setup supports:
 - `outlook-mcp-server` — Outlook calendar read/write
 - `things3-mcp-server` — Things 3 task creation via URL scheme
 - `calendly-mcp-server` — Calendly scheduling operations
+- `granola-mcp-server` — Granola meeting search and analysis (optional, requires [GranolaMCP](https://github.com/pedramamini/GranolaMCP))
+
+### Granola Integration
+
+The Meeting Notes view reads Granola's local cache directly (`~/Library/Application Support/Granola/cache-v3.json`) to display the last week's meetings with Granola's own AI-generated summaries — no additional Claude API cost. This works independently of the Granola MCP server.
+
+If you also want the agent to search/analyze meetings via chat, install the GranolaMCP server:
+
+```bash
+git clone https://github.com/pedramamini/GranolaMCP.git
+cd GranolaMCP && pip install -e .
+```
+
+Then add it to your `config.yaml`:
+
+```yaml
+mcp_servers:
+  - name: "granola"
+    command: "python3"
+    args: ["-m", "granola_mcp.mcp"]
+```
 
 ## Contributing
 
