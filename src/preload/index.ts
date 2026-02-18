@@ -43,7 +43,8 @@ const api = {
     get: () => ipcRenderer.invoke('settings:get'),
     update: (settings: Record<string, unknown>) => ipcRenderer.invoke('settings:update', settings),
     getContext: () => ipcRenderer.invoke('settings:get-context'),
-    saveContext: (content: string) => ipcRenderer.invoke('settings:save-context', content)
+    saveContext: (content: string) => ipcRenderer.invoke('settings:save-context', content),
+    resetContext: () => ipcRenderer.invoke('settings:reset-context')
   },
   chat: {
     send: (message: string) => ipcRenderer.invoke('chat:send', message),

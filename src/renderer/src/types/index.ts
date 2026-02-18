@@ -41,6 +41,7 @@ interface WindowApi {
     update: (settings: Record<string, unknown>) => Promise<{ success?: boolean }>
     getContext: () => Promise<{ content: string }>
     saveContext: (content: string) => Promise<{ success?: boolean }>
+    resetContext: () => Promise<{ content: string }>
   }
   chat: {
     send: (message: string) => Promise<{ response?: string; error?: string; sessionId?: string }>

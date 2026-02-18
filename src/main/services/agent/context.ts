@@ -72,6 +72,12 @@ export function saveAgentContext(content: string): void {
   writeFileSync(getContextPath(), content, 'utf-8')
 }
 
+export function resetAgentContext(): string {
+  const defaultContext = buildDefaultContext()
+  writeFileSync(getContextPath(), defaultContext, 'utf-8')
+  return defaultContext
+}
+
 export function buildLearnedContext(): string {
   try {
     const stats = getAllFeedbackStats()

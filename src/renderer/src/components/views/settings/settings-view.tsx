@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { Key, Clock, FileText, Zap, Eye, EyeOff, Save, Check, Mail, Shield, Target } from 'lucide-react'
+import { Key, Clock, FileText, Zap, Eye, EyeOff, Save, Check, Mail, Shield, Target, RotateCcw } from 'lucide-react'
 import type { AppSettings } from '@/types'
 
 export function SettingsView() {
@@ -61,6 +61,10 @@ export function SettingsView() {
       refreshIntervalMinutes: parseInt(refreshInterval) || 30,
       autonomyMode
     })
+    // Also save agent context so the main Save button saves everything
+    if (agentContext) {
+      await window.api.settings.saveContext(agentContext)
+    }
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
@@ -79,6 +83,11 @@ export function SettingsView() {
     setContextSaving(false)
     setContextSaved(true)
     setTimeout(() => setContextSaved(false), 2000)
+  }
+
+  async function handleResetContext() {
+    const { content } = await window.api.settings.resetContext()
+    setAgentContext(content)
   }
 
   if (loading || !settings) {
@@ -323,21 +332,33 @@ export function SettingsView() {
               <FileText className="w-4 h-4 text-violet-500" />
               <h3 className="text-[15px] font-semibold">Agent Context</h3>
             </div>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleSaveContext}
-              disabled={contextSaving || contextLoading}
-            >
-              {contextSaved ? (
-                <>
-                  <Check className="w-3 h-3 mr-1" />
-                  Saved
-                </>
-              ) : (
-                contextSaving ? 'Saving...' : 'Save Context'
-              )}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={handleResetContext}
+                disabled={contextLoading}
+                className="text-zinc-500 hover:text-zinc-300"
+              >
+                <RotateCcw className="w-3 h-3 mr-1" />
+                Reset
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleSaveContext}
+                disabled={contextSaving || contextLoading}
+              >
+                {contextSaved ? (
+                  <>
+                    <Check className="w-3 h-3 mr-1" />
+                    Saved
+                  </>
+                ) : (
+                  contextSaving ? 'Saving...' : 'Save Context'
+                )}
+              </Button>
+            </div>
           </div>
           <p className="text-[12px] text-zinc-500 mb-3">
             Customize Antonina&apos;s personality, priorities, and rules. Markdown format.

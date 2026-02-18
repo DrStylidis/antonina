@@ -1,7 +1,7 @@
 import { ipcMain, safeStorage } from 'electron'
 import { resetClient } from '../services/ai/client'
 import { loadConfig, saveConfig } from '../services/config'
-import { loadAgentContext, saveAgentContext } from '../services/agent/context'
+import { loadAgentContext, saveAgentContext, resetAgentContext } from '../services/agent/context'
 import { getDb } from '../services/db'
 import type { AppConfig } from '../services/config'
 
@@ -170,5 +170,10 @@ export function registerSettingsHandlers(): void {
   ipcMain.handle('settings:save-context', (_event, content: string) => {
     saveAgentContext(content)
     return { success: true }
+  })
+
+  ipcMain.handle('settings:reset-context', () => {
+    const content = resetAgentContext()
+    return { content }
   })
 }
