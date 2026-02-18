@@ -1,0 +1,78 @@
+# Antonina Configuration
+# Copy this file to config.yaml and customize for your setup.
+# config.yaml is gitignored and will not be committed.
+
+founder:
+  name: "Alex"
+  full_name: "Alex Johnson"
+  role: "CEO & Co-Founder"
+  company: "Acme Corp"
+  company_description: "AI startup building next-generation tools"
+  timezone: "America/New_York"
+  bio: |
+    - Raising seed round via Example Ventures
+    - Key clients: ClientA, ClientB
+    - Academic collaboration with Example University
+  communication_style: |
+    - Direct and efficient
+    - Formal for investors and VCs
+    - Professional for clients
+    - Casual for internal team
+  sign_off: "Alex"
+
+schedule:
+  morning_sweep: "07:30"
+  evening_sweep: "18:00"
+  refresh_interval_minutes: 30
+
+outlook:
+  account_email: "alex@acmecorp.com"
+
+vip_contacts:
+  - pattern: "@exampleventures.com"
+    label: "Investor (Example Ventures)"
+    tone: "formal, confident, data-driven"
+  - pattern: "@importantclient.com"
+    label: "Key Client"
+    tone: "professional, solution-oriented"
+
+email:
+  lookback_hours: 12
+  max_emails: 50
+  noise_patterns:
+    - "unsubscribe"
+    - "newsletter"
+    - "no-reply"
+    - "noreply"
+    - "marketing"
+
+agent:
+  autonomy_mode: balanced
+  max_sessions_per_hour: 6
+  max_sessions_per_day: 50
+  max_tool_calls_per_session: 20
+
+api:
+  briefing_model: "claude-sonnet-4-5-20250929"
+  triage_model: "claude-haiku-4-5-20251001"
+  draft_model: "claude-sonnet-4-5-20250929"
+  agent_model: "claude-sonnet-4-5-20250929"
+  max_daily_cost_usd: 10.0
+
+# MCP Server configuration (optional)
+# Uncomment and set paths to enable external tool integrations.
+# mcp_servers:
+#   - name: "outlook"
+#     command: "node"
+#     args: ["/path/to/outlook-mcp-server/dist/index.js"]
+#     env:
+#       MICROSOFT_CLIENT_ID: "your-client-id"
+#       MICROSOFT_TENANT_ID: "your-tenant-id"
+#   - name: "things3"
+#     command: "node"
+#     args: ["/path/to/things3-mcp-server/dist/index.js"]
+#   - name: "calendly"
+#     command: "node"
+#     args: ["/path/to/calendly-mcp-server/dist/index.js"]
+#     env:
+#       CALENDLY_API_TOKEN: "your-calendly-token"

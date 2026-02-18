@@ -1,0 +1,22 @@
+node_modules
+dist
+out
+.DS_Store
+.eslintcache
+*.log*
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# User config (contains personal data)
+config.yaml
+
+# Database files
+*.db
+*.db-wal
+*.db-shm
+
+# TypeScript build info
+tsconfig.node.tsbuildinfo
