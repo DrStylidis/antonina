@@ -4,18 +4,20 @@ import {
   Mail,
   Calendar,
   CheckSquare,
+  FileText,
   Clock,
   Activity,
   Settings
 } from 'lucide-react'
 
-export type View = 'briefing' | 'emails' | 'schedule' | 'tasks' | 'history' | 'activity' | 'settings'
+export type View = 'briefing' | 'emails' | 'schedule' | 'tasks' | 'meetings' | 'history' | 'activity' | 'settings'
 
 const NAV_ITEMS = [
   { id: 'briefing' as const, label: 'Briefing', icon: Sunrise },
   { id: 'emails' as const, label: 'Emails', icon: Mail },
   { id: 'schedule' as const, label: 'Schedule', icon: Calendar },
   { id: 'tasks' as const, label: 'Tasks', icon: CheckSquare },
+  { id: 'meetings' as const, label: 'Meetings', icon: FileText },
   { id: 'history' as const, label: 'History', icon: Clock },
   { id: 'activity' as const, label: 'Activity', icon: Activity }
 ]

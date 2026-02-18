@@ -59,6 +59,9 @@ interface WindowApi {
     runNow: () => Promise<{ success?: boolean; error?: string; sessionId?: string; summary?: string }>
     onActivity: (callback: (activity: AgentActivity) => void) => () => void
   }
+  meetings: {
+    list: () => Promise<{ meetings: GranolaMeeting[]; error?: string }>
+  }
   goals: {
     list: () => Promise<{ goals: Array<{ id: string; title: string; description: string; enabled: number; last_status: string | null; schedule: string }> }>
     update: (id: string, updates: { enabled?: number }) => Promise<{ success: boolean }>
@@ -263,4 +266,17 @@ export interface ChatToolCall {
   toolName: string
   status: 'start' | 'done' | 'error'
   result?: string
+}
+
+// === Granola Meeting Types ===
+
+export interface GranolaMeeting {
+  id: string
+  title: string
+  date: string
+  durationMinutes: number | null
+  participants: string[]
+  panelHtml: string | null
+  panelTitle: string | null
+  hasTranscript: boolean
 }

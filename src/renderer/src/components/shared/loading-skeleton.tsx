@@ -86,6 +86,31 @@ export function ScheduleLoadingSkeleton() {
   )
 }
 
+export { MeetingListLoadingSkeleton as MeetingListSkeleton }
+export function MeetingListLoadingSkeleton() {
+  return (
+    <div className="space-y-0">
+      {/* Header skeleton */}
+      <div className="flex items-center justify-between px-3 py-2 border-b border-border/50">
+        <Skeleton className="h-3 w-20" />
+        <Skeleton className="w-7 h-7 rounded" />
+      </div>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="px-3 py-3 border-b border-border/30">
+          <div className="space-y-1.5">
+            <Skeleton className="h-3.5 w-3/4" />
+            <Skeleton className="h-3 w-24" />
+            <div className="flex gap-3 mt-1">
+              <Skeleton className="h-2.5 w-14" />
+              <Skeleton className="h-2.5 w-20" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export { TasksLoadingSkeleton as TasksSkeleton }
 export function TasksLoadingSkeleton() {
   return (

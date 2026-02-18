@@ -76,3 +76,8 @@ api:
 #     args: ["/path/to/calendly-mcp-server/dist/index.js"]
 #     env:
 #       CALENDLY_API_TOKEN: "your-calendly-token"
+#   - name: "granola"
+#     command: "python3"
+#     args: ["-m", "granola_mcp.mcp"]
+#     env:
+#       GRANOLA_CACHE_PATH: "~/Library/Application Support/Granola/cache-v3.json"

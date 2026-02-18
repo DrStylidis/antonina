@@ -82,6 +82,9 @@ const api = {
       ipcRenderer.invoke('goals:list'),
     update: (id: string, updates: { enabled?: number }): Promise<{ success: boolean }> =>
       ipcRenderer.invoke('goals:update', id, updates),
+  },
+  meetings: {
+    list: () => ipcRenderer.invoke('meetings:list'),
   }
 }
 

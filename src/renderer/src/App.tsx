@@ -9,6 +9,7 @@ import { TasksView } from '@/components/views/tasks/tasks-view'
 import { HistoryView } from '@/components/views/history/history-view'
 import { SettingsView } from '@/components/views/settings/settings-view'
 import { ActivityView } from '@/components/views/activity/activity-view'
+import { MeetingsView } from '@/components/views/meetings/meetings-view'
 import { Toaster } from 'sonner'
 
 const VIEW_TITLES: Record<View, string> = {
@@ -16,6 +17,7 @@ const VIEW_TITLES: Record<View, string> = {
   emails: 'Email Triage',
   schedule: 'Today\'s Schedule',
   tasks: 'Tasks',
+  meetings: 'Meeting Notes',
   history: 'Briefing History',
   activity: 'Agent Activity',
   settings: 'Settings'
@@ -31,6 +33,8 @@ function renderView(view: View) {
       return <ScheduleView />
     case 'tasks':
       return <TasksView />
+    case 'meetings':
+      return <MeetingsView />
     case 'history':
       return <HistoryView />
     case 'activity':
@@ -73,7 +77,7 @@ export default function App() {
           <div className="flex-1 overflow-y-auto">
             <ViewTransition viewKey={activeView}>
               <ErrorBoundary>
-                {activeView === 'emails' ? (
+                {activeView === 'emails' || activeView === 'meetings' ? (
                   renderView(activeView)
                 ) : (
                   <div className="p-6">

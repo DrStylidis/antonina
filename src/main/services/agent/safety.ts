@@ -19,6 +19,18 @@ const RISK_LEVELS: Record<string, RiskLevel> = {
   list_goals: 'low',
   update_goal_status: 'low',
 
+  // Granola meeting notes (read-only)
+  get_recent_meetings: 'low',
+  list_meetings: 'low',
+  search_meetings: 'low',
+  get_meeting: 'low',
+  get_transcript: 'low',
+  get_meeting_notes: 'low',
+  list_participants: 'low',
+  export_meeting: 'low',
+  get_statistics: 'low',
+  analyze_patterns: 'low',
+
   // Medium risk - depends on autonomy mode
   create_calendar_event: 'medium',
   draft_reply: 'medium',

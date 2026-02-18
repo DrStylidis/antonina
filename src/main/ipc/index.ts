@@ -7,6 +7,7 @@ import { registerSettingsHandlers } from './settings'
 import { registerAgentHandlers } from './agent'
 import { registerChatHandlers } from './chat'
 import { registerGoalsHandlers } from './goals'
+import { registerMeetingsHandlers } from './meetings'
 
 export function registerAllHandlers(): void {
   registerSettingsHandlers()
@@ -18,4 +19,5 @@ export function registerAllHandlers(): void {
   registerAgentHandlers()
   registerChatHandlers()
   registerGoalsHandlers()
+  registerMeetingsHandlers()
 }
