@@ -13,7 +13,7 @@ Built with Electron, React, and Claude AI.
 - **Calendar Management** — Shows today/tomorrow events, create meetings via chat with human approval before execution
 - **Task Sync** — Reads today's tasks from Things 3 via AppleScript, supports create/update/delete through the agent
 - **Daily Briefings** — AI-generated morning briefings combining emails, calendar, and tasks into an actionable summary
-- **Conversational Chat** — Ask Antonina to check your schedule, draft emails, book meetings, or manage tasks
+- **Order & Plan** — Conversational chat interface to give Antonina instructions: create tasks in Things 3, book meetings, draft emails, check your schedule, or manage anything else
 - **Smart Autonomy** — 3-tier risk classification (low/medium/high) with configurable autonomy modes (conservative/balanced/executive) that control which actions auto-execute vs. require approval
 - **Goal Management** — Persistent goals that Antonina monitors proactively (inbox control, meeting prep, task review) with periodic checking and automated agent sessions when goals need attention
 - **Meeting Notes** — Reads Granola's local AI-generated meeting summaries (action items, decisions, key points) and displays the last week's meetings in a dedicated view — zero additional API cost
@@ -45,7 +45,7 @@ Antonina uses a risk-based autonomy system that classifies every action by risk 
 | Level | Examples |
 |-------|----------|
 | **Low** | fetch_emails, fetch_calendar, read_tasks, show_notification, generate_briefing, read/update memory |
-| **Medium** | create_calendar_event, draft_reply, delete_task, request_human_review |
+| **Medium** | create_calendar_event, things_add_task, things_add_project, draft_reply, delete_task |
 | **High** | send_email, delete_calendar_event, update_calendar_event |
 
 ### Autonomy Modes
@@ -87,7 +87,7 @@ These patterns are injected into the agent's context so it learns your preferenc
 
 ```
 Renderer Process (React 19 + Tailwind v4 + shadcn/ui)
-  Views: Briefing, Emails, Schedule, Tasks, Meetings, Activity, History, Settings
+  Views: Briefing, Emails, Schedule, Tasks, Meetings, Order & Plan, Activity, History, Settings
                      |
                      | IPC Bridge (30+ handlers)
                      |
@@ -177,9 +177,10 @@ src/
 │       │   ├── views/              # Page views
 │       │   │   ├── briefing/       # Daily briefing display
 │       │   │   ├── emails/         # Email list, detail, draft panel
-│       │   │   ├── schedule/       # Calendar + embedded chat
+│       │   │   ├── schedule/       # Calendar events
 │       │   │   ├── tasks/          # Things 3 task cards
 │       │   │   ├── meetings/       # Granola meeting notes + AI summaries
+│       │   │   ├── chat/          # Order & Plan conversational interface
 │       │   │   ├── activity/       # Approval queue + auto-executed actions
 │       │   │   ├── history/        # Agent session logs
 │       │   │   └── settings/       # Configuration, autonomy mode, goals

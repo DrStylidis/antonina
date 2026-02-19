@@ -68,7 +68,7 @@ api:
 #     env:
 #       MICROSOFT_CLIENT_ID: "your-client-id"
 #       MICROSOFT_TENANT_ID: "your-tenant-id"
-#   - name: "things3"
+#   - name: "things3_mcp_server"
 #     command: "node"
 #     args: ["/path/to/things3-mcp-server/dist/index.js"]
 #   - name: "calendly"

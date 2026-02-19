@@ -19,6 +19,15 @@ const RISK_LEVELS: Record<string, RiskLevel> = {
   list_goals: 'low',
   update_goal_status: 'low',
 
+  // Things 3 MCP tools
+  things_add_task: 'medium',
+  things_add_project: 'medium',
+  things_update_task: 'medium',
+  things_search: 'low',
+  things_show_list: 'low',
+  things_get_today: 'low',
+  things_get_upcoming: 'low',
+
   // Granola meeting notes (read-only)
   get_recent_meetings: 'low',
   list_meetings: 'low',

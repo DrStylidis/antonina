@@ -5,12 +5,13 @@ import {
   Calendar,
   CheckSquare,
   FileText,
+  MessageSquare,
   Clock,
   Activity,
   Settings
 } from 'lucide-react'
 
-export type View = 'briefing' | 'emails' | 'schedule' | 'tasks' | 'meetings' | 'history' | 'activity' | 'settings'
+export type View = 'briefing' | 'emails' | 'schedule' | 'tasks' | 'meetings' | 'order' | 'history' | 'activity' | 'settings'
 
 const NAV_ITEMS = [
   { id: 'briefing' as const, label: 'Briefing', icon: Sunrise },
@@ -18,6 +19,7 @@ const NAV_ITEMS = [
   { id: 'schedule' as const, label: 'Schedule', icon: Calendar },
   { id: 'tasks' as const, label: 'Tasks', icon: CheckSquare },
   { id: 'meetings' as const, label: 'Meetings', icon: FileText },
+  { id: 'order' as const, label: 'Order & Plan', icon: MessageSquare },
   { id: 'history' as const, label: 'History', icon: Clock },
   { id: 'activity' as const, label: 'Activity', icon: Activity }
 ]

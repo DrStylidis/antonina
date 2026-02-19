@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react'
 import { useStaggeredEntrance } from '@/hooks/use-staggered-entrance'
 import { Calendar, AlertTriangle, RefreshCw } from 'lucide-react'
 import { EventCard } from './event-card'
-import { CalendarChat } from './calendar-chat'
 import { ScheduleSkeleton } from '@/components/shared/loading-skeleton'
 import { Button } from '@/components/ui/button'
 import type { CalendarEvent } from '@/types'
@@ -24,11 +23,6 @@ export function ScheduleView() {
   useEffect(() => {
     fetchSchedule()
   }, [fetchSchedule])
-
-  const refreshEvents = useCallback(async () => {
-    const result = await window.api.schedule.today()
-    if (!result.error) setEvents(result.events ?? [])
-  }, [])
 
   const now = new Date()
   const todayStr = now.toDateString()
@@ -111,9 +105,6 @@ export function ScheduleView() {
           )}
         </div>
       </div>
-
-      {/* Embedded chat panel */}
-      <CalendarChat onEventsChanged={refreshEvents} />
     </div>
   )
 }
