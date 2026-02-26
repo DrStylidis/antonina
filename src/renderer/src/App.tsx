@@ -53,6 +53,9 @@ export default function App() {
   const [pendingApprovals, setPendingApprovals] = useState(0)
 
   useEffect(() => {
+    // Only run if window.api is available (Electron context)
+    if (!window.api?.agent?.pendingApprovals) return
+    
     // Initial fetch
     window.api.agent.pendingApprovals().then((items) => setPendingApprovals(items.length)).catch(() => {})
     // Poll every 10 seconds

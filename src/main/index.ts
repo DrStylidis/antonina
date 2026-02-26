@@ -9,6 +9,9 @@ import { shutdown as shutdownMCP } from './services/agent/mcp-client'
 import { createTray, destroyTray } from './services/tray'
 import { initApiKey } from './ipc/settings'
 
+// Disable GPU acceleration for VM/headless environments
+app.disableHardwareAcceleration()
+
 // Load .env manually (avoids dotenv dependency issues with Electron)
 try {
   // In packaged app: .env is in Resources via extraResources
